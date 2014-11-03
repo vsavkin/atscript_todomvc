@@ -1,0 +1,100 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>AngularJS • TodoMVC</title>
+    <link rel="stylesheet" href="base.css">
+    <style>[ng-cloak] {
+        display: none;
+    }</style>
+</head>
+
+<body>
+
+<ng-view/>
+
+<div ng-controller="TodoCtrl as ctrl">
+    <section id="todoapp">
+
+        <header id="header">
+            <h1>todos</h1>
+
+            <form id="todo-form" ng-submit="ctrl.addTodo()">
+                <input id="new-todo" placeholder="What needs to be done?" ng-model="ctrl.newTodo" ng-disabled="saving"
+                       autofocus>
+            </form>
+        </header>
+
+
+        <section id="main" ng-show="ctrl.todos.length" ng-cloak>
+            <input id="toggle-all" type="checkbox" ng-model="ctrl.allChecked" ng-click="ctrl.markAll(ctrl.allChecked)">
+            <label for="toggle-all">Mark all as complete</label>
+            <ul id="todo-list">
+                <li ng-repeat="todo in ctrl.todos | filter:ctrl.statusFilter track by $index"
+                    ng-class="{completed: todo.completed, editing: todo == ctrl.editedTodo}">
+                    <div class="view">
+                        <input class="toggle" type="checkbox" ng-model="todo.completed"
+                               ng-change="ctrl.saveTodo(todo)">
+                        <label ng-dblclick="ctrl.editTodo(todo)">{{todo.title}}</label>
+                        <button class="destroy" ng-click="ctrl.removeTodo(todo)"></button>
+                    </div>
+                    <form ng-submit="ctrl.saveEdits(todo, 'submit')">
+                        <input class="edit" ng-trim="false" ng-model="ctrl.editedTodo.title"
+                               todo-escape="ctrl.revertEdits(todo)"
+                               ng-blur="ctrl.saveEdits(todo, 'blur')" todo-focus="todo == ctrl.editedTodo">
+                    </form>
+                </li>
+            </ul>
+        </section>
+
+
+        <footer id="footer" ng-show="ctrl.todos.length" ng-cloak>
+                        <span id="todo-count"><strong>{{ctrl.remainingCount}}</strong>
+                            <ng-pluralize count="ctrl.remainingCount"
+                                          when="{ one: 'item left', other: 'items left' }"></ng-pluralize>
+                        </span>
+            <ul id="filters">
+                <li>
+                    <a ng-class="{selected: status == ''} " href="#/">All</a>
+                </li>
+                <li>
+                    <a ng-class="{selected: status == 'active'}" href="#/active">Active</a>
+                </li>
+                <li>
+                    <a ng-class="{selected: status == 'completed'}" href="#/completed">Completed</a>
+                </li>
+            </ul>
+            <button id="clear-completed" ng-click="ctrl.clearCompletedTodos()" ng-show="ctrl.completedCount">Clear
+                completed
+                ({{ctrl.completedCount}})
+            </button>
+        </footer>
+    </section>
+
+
+
+    <footer id="info">
+        <p>Double-click to edit a todo</p>
+
+        <p>Credits:
+            <a href="http://twitter.com/cburgdorf">Christoph Burgdorf</a>,
+            <a href="http://ericbidelman.com">Eric Bidelman</a>,
+            <a href="http://jacobmumm.com">Jacob Mumm</a> and
+            <a href="http://igorminar.com">Igor Minar</a>
+        </p>
+
+        <p>Part of <a href="http://todomvc.com">TodoMVC</a></p>
+    </footer>
+</div>
+
+<script src="./node_modules/traceur/bin/traceur-runtime.js"></script>
+<script src="./node_modules/requirejs/require.js"></script>
+<script>
+    require.config({
+        paths: {
+            assert: './node_modules/rtts-assert/dist/amd/assert'
+        },
+        deps: ['./compiled/src/main']
+    });
+</script>
+</body>
+</html>
