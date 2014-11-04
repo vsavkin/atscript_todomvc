@@ -4,8 +4,9 @@ import {Todo} from './../models/todo'
 var STORAGE_ID = 'ANGULAR-MVC';
 
 export class TodoStorage {
-  //public todos:Array<Todo>
-  //public localStorage:LocalStorage
+  todos:Array;
+  localStorage:Object; //should be LocalStorage
+
   constructor() {
     this.todos = [];
     this.localStorage = window.localStorage;

@@ -5,6 +5,7 @@
     "types": true,
     "typeAssertions": true,
     "typeAssertionModule": "assert",
-    "annotations": true
+    "annotations": true,
+    "memberVariables" : true
   }
 }

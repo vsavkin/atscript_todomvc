@@ -1,3 +1,3 @@
-import {angular} from './angular';
+import {ng} from './angular';
 export var angular = window.angular;
 

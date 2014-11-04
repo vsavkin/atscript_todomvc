@@ -1,6 +1,7 @@
 export class Todo {
-  //public title:string
-  //public completed:boolean
+  title:string;
+  completed:boolean;
+
   constructor(title:string, completed:boolean) {
     this.title = title;
     this.completed = completed;

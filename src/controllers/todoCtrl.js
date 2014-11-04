@@ -3,11 +3,12 @@ import {Todo} from './../models/todo';
 import {TodoStorage} from './../services/todoStorage';
 
 export class TodoCtrl {
-  //public newTodo:string
-  //public editedTodo:Todo
-  //public originalTodo:Todo
-  //private todos:Array<Todo>
-  //private store:TodoStorage
+  newTodo:string;
+  editedTodo:Todo;
+  originalTodo:Todo;
+  todos:Array;
+  store:TodoStorage;
+
   constructor($scope, $filter, store:TodoStorage) {
     this.store = store;
     this.todos = $scope.todos = store.get();
